@@ -1,7 +1,11 @@
-<layout id="WatchFace">
-    <!-- Display the current time in the center -->
-    <label id="TimeLabel" x="center" y="2%" font="Graphics.FONT_LARGE" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+<resources>
 
-    <!-- Display the current day of the week, month, and date on the bottom -->
-    <label id="DateLabel" x="center" y="80%" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
-</layout>
+    <layout id="WatchFace">
+        <!-- Display the current time in the center -->
+        <label id="TimeLabel" x="center" y="0%" font="Graphics.FONT_NUMBER_MILD" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+
+        <!-- Display the current day of the week, month, and date on the bottom -->
+        <label id="DateLabel" x="center" y="80%" font="Graphics.FONT_SMALL" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+
+    </layout>
+</resources>
