@@ -14,7 +14,7 @@ Currently targeting **Garmin Fenix 6** and minimum API version **3.2.0**.
 
 #### Metrics
 
--   [ ] ❤️ Heart rate: current, daily resting, 7-day average resting, daily low and high
+-   [x] ❤️ Heart rate: current, daily resting, 7-day average resting, daily low and high
 -   [ ] 📈 HRV: last night avg, 7-day data for: average night avg., lowest night avg., highest night avg.
 -   [ ] 🌙 Sleep duration: last night, 7-day average/shortest/longest
 -   [ ] ⚡ Body battery: current, higest today, lowest yesterday, 7-day average of the highest daily value
