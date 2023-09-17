@@ -1,3 +1,15 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="hr" filename="heart_rate_inverted.svg" scaleX="10%"
+        scaleY="10%"
+        scaleRelativeTo="screen" dithering="none">
+    </bitmap>
+    <bitmap id="up" filename="pointer_up.svg" scaleX="5%"
+        scaleY="5%"
+        scaleRelativeTo="screen" dithering="none">
+    </bitmap>
+    <bitmap id="down" filename="pointer_down.svg" scaleX="5%"
+        scaleY="5%"
+        scaleRelativeTo="screen" dithering="none">
+    </bitmap>
 </drawables>
