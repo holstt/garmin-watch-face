@@ -5,7 +5,8 @@ import Toybox.System;
 import Toybox.WatchUi;
 using Toybox.Time.Gregorian;
 import Toybox.ActivityMonitor;
-using Toybox.Time;
+import Toybox.Time;
+import Toybox.SensorHistory;
 
 class HrMetrics {
     public var currentHr as Number or Null;
@@ -24,6 +25,27 @@ class HrMetrics {
         self.highHr = highHr;
         self.avgRestingHr = avgRestingHr;
     }
+}
 
+class BodyBatteryMetrics {
+    public var current as SensorSample or Null;
+    public var todayMax as SensorSample or Null;
+    public var yesterdayMin as SensorSample or Null;
+    public var yesterdayMax as SensorSample or Null;
+    public var avgMax as Number;
+
+    public function initialize(
+        current as SensorSample or Null,
+        todayMax as SensorSample or Null,
+        yesterdayMin as SensorSample or Null,
+        yesterdayMax as SensorSample or Null,
+        avgMax as Number) {
+
+        self.current = current;
+        self.todayMax = todayMax;
+        self.yesterdayMin = yesterdayMin;
+        self.yesterdayMax = yesterdayMax;
+        self.avgMax = avgMax;
+    }
 
 }

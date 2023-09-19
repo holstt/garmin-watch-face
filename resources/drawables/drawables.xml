@@ -12,4 +12,8 @@
         scaleY="5%"
         scaleRelativeTo="screen" dithering="none">
     </bitmap>
+    <bitmap id="bb" filename="body_battery.svg" scaleX="10%"
+        scaleY="10%"
+        scaleRelativeTo="screen" dithering="none">
+    </bitmap>
 </drawables>

@@ -15,10 +15,10 @@ Currently targeting **Garmin Fenix 6** and minimum API version **3.2.0**.
 #### Metrics
 
 -   [x] ❤️ Heart rate: current, daily resting, 7-day average resting, daily low and high
--   [ ] 📈 HRV: last night avg, 7-day data for: average night avg., lowest night avg., highest night avg.
--   [ ] 🌙 Sleep duration: last night, 7-day average/shortest/longest
--   [ ] ⚡ Body battery: current, higest today, lowest yesterday, 7-day average of the highest daily value
+-   [x] ⚡ Body battery: current, highest today, lowest yesterday, highest yesterday, 7-day average of the highest daily value
 -   [ ] 😵 Stress Score: current, 7-day average/lowest/highest
+-   [ ] 📈 HRV: last night avg, 7-day data for: average night avg., lowest night avg., highest night avg. (HRV API not available in Connect IQ SDK yet)
+-   [ ] 🌙 Sleep duration: last night, 7-day average/shortest/longest (sleep API not available in Connect IQ SDK yet)
 
 If the current reading is also the highest or lowest reading, it will be highlighted. E.g. if last night's sleep duration was the longest of the last 7 days, it will be highlighted.
 

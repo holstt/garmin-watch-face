@@ -23,9 +23,16 @@ class View extends WatchUi.WatchFace {
     hidden var _highLowHrView;
     hidden var _timeLabel;
     hidden var _restingHrView;
+    hidden var _bbView;
+
+    hidden var _hrProvider;
+    hidden var _bbProvider;
 
     function initialize() {
         WatchFace.initialize();
+        _hrProvider = new HrMetricsProvider();
+        _bbProvider = new BbMetricsProvider();
+
         System.println("Initialized");
     }
 
@@ -44,6 +51,7 @@ class View extends WatchUi.WatchFace {
         _hrView = new CurrentHrView(res.iconHr);
         _highLowHrView = new HighLowHrView(res.iconUp, res.iconDown);
         _restingHrView = new RestingHrView();
+        _bbView = new BbView(res.iconBb);
 
         setLayout(Rez.Layouts.WatchFace(dc));
     }
@@ -63,6 +71,40 @@ class View extends WatchUi.WatchFace {
         // NB: Calls to dc before this will be overwritten!
         View.onUpdate(dc);
 
+        var now = Time.now();
+
+        // var testMetrics = metricsProvider.getTestMetrics();
+        // new Text({
+        //     :text=>testMetrics.bbNewestDateStr,
+        //     :color=>Graphics.COLOR_WHITE,
+        //     :font=>Graphics.FONT_XTINY,
+        //     :locX=>WatchUi.LAYOUT_HALIGN_CENTER,
+        //     :locY=>WatchUi.LAYOUT_VALIGN_CENTER + 50,
+        // }).draw(dc);
+        // new Text({
+        //     :text=>testMetrics.bbOldestDateStr,
+        //     :color=>Graphics.COLOR_GREEN,
+        //     :font=>Graphics.FONT_XTINY,
+        //     :locX=>WatchUi.LAYOUT_HALIGN_CENTER,
+        //     :locY=>WatchUi.LAYOUT_VALIGN_CENTER + 70,
+        // }).draw(dc);
+        // new Text({
+        //     :text=>testMetrics.bbNew,
+        //     :color=>Graphics.COLOR_WHITE,
+        //     :font=>Graphics.FONT_XTINY,
+        //     :locX=>WatchUi.LAYOUT_HALIGN_CENTER,
+        //     :locY=>WatchUi.LAYOUT_VALIGN_CENTER + 90,
+        // }).draw(dc);
+        // new Text({
+        //     :text=>testMetrics.bbOld,
+        //     :color=>Graphics.COLOR_GREEN,
+        //     :font=>Graphics.FONT_XTINY,
+        //     :locX=>WatchUi.LAYOUT_HALIGN_CENTER,
+        //     :locY=>WatchUi.LAYOUT_VALIGN_CENTER + 110,
+        // }).draw(dc);
+
+
+
         // Time
         _timeLabel = createTimeLabel();
         updateTimeLabel(dc);
@@ -76,20 +118,26 @@ class View extends WatchUi.WatchFace {
         drawCenterLine(dc, lineY1, lineY2);
 
         // Draw hr
-        var hrMetrics = new MetricsProvider().getHrMetrics();
+        var hrMetrics = _hrProvider.getMetrics();
         var hrViewX = 30;
         var hrViewY = lineY1;
-        _hrView.update(dc, hrMetrics.currentHr, hrViewX, hrViewY);
+        _hrView.draw(dc, hrMetrics.currentHr, hrViewX, hrViewY);
 
         // Draw high/low
         var highLowX = 20;
         var highLowY = lineY1 + _hrView.getHeight() + 7;
-        _highLowHrView.update(dc, highLowX, highLowY, hrMetrics.highHr, hrMetrics.lowHr);
+        _highLowHrView.draw(dc, highLowX, highLowY, hrMetrics.highHr, hrMetrics.lowHr);
 
         // Draw resting
         var restingX = 30;
         var restingY = highLowY + _highLowHrView.getHeight() + 7;
         _restingHrView.draw(dc, restingX, restingY, hrMetrics.restingHr, hrMetrics.avgRestingHr);
+
+        // Draw bb
+        var bbMetrics = _bbProvider.getMetrics(now);
+        var bbX = 20;
+        var bbY = restingY + _restingHrView.getHeight() + 10;
+        _bbView.draw(dc, bbX, bbY, bbMetrics);
 
         // DEBUG
         // timeLabel.setBackgroundColor(Graphics.COLOR_RED);
@@ -98,7 +146,8 @@ class View extends WatchUi.WatchFace {
     }
 
     function updateTimeLabel(dc as Dc) as Void {
-        var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+        // Get Info for a Moment in local time.
+        var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM) as Gregorian.Info;
         var timeString = Lang.format("$1$:$2$", [today.hour.format("%02d"), today.min.format("%02d")]);
         _timeLabel.setText(timeString);
         _timeLabel.draw(dc);

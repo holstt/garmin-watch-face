@@ -2,9 +2,6 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
-using Toybox.Time.Gregorian;
-import Toybox.ActivityMonitor;
-using Toybox.Time;
 
 class CurrentHrView {
     // hidden var _aX;
@@ -19,16 +16,16 @@ class CurrentHrView {
         return _icon.getHeight();
     }
 
-    function update(dc as Dc, currentHr as Number, aX as Number, aY as Number) as Void {
+    function draw(dc as Dc, currentHr as Number or Null, aX as Number, aY as Number) as Void {
         // _aX = aX;
         // _aY = aY;
 
        dc.drawBitmap(aX, aY, _icon);
-       draw(dc, aX + _icon.getWidth(), aY, toViewNumber(currentHr));
+       _draw(dc, aX + _icon.getWidth(), aY, toViewNumber(currentHr));
     }
 
 
-    hidden function draw(dc as Dc, aX as Number, aY as Number, text as String) as Text {
+    hidden function _draw(dc as Dc, aX as Number, aY as Number, text as String) as Text {
         var font = Graphics.FONT_SYSTEM_TINY;
         var color = Graphics.COLOR_WHITE;
 
@@ -63,13 +60,13 @@ class HighLowHrView {
         return _iconUp.getHeight();
     }
 
-    function update(dc as Dc, aX as Number, aY as Number, hrHigh as Number, hrLow as Number) as Void {
+    function draw(dc as Dc, aX as Number, aY as Number, hrHigh as Number or Null, hrLow as Number or Null) as Void {
 
-        var newX = draw(dc, aX, aY, toViewNumber(hrHigh), _iconUp);
-        draw(dc, aX + newX, aY, toViewNumber(hrLow), _iconDown);
+        var newX = _draw(dc, aX, aY, toViewNumber(hrHigh), _iconUp);
+        _draw(dc, aX + newX, aY, toViewNumber(hrLow), _iconDown);
     }
 
-    hidden function draw( dc as Dc, aX as Number, aY as Number, text as String, icon as BitmapResource) as Number {
+    hidden function _draw( dc as Dc, aX as Number, aY as Number, text as String, icon as BitmapResource) as Number {
         // Icon
         dc.drawBitmap(aX, aY, icon);
 
@@ -98,10 +95,15 @@ class HighLowHrView {
 
 
 class RestingHrView {
+    hidden var _view;
     function initialize() {
     }
 
-    public function draw(dc as Dc, aX as Number, aY as Number, restingHr as Number, restingHr7d as Number) {
+    public function getHeight() as Number {
+        return _view.height;
+    }
+
+    public function draw(dc as Dc, aX as Number, aY as Number, restingHr as Number or Null, restingHr7d as Number or Null) {
         var font = Graphics.FONT_SYSTEM_XTINY;
         var color = Graphics.COLOR_WHITE;
 
@@ -113,6 +115,7 @@ class RestingHrView {
             :locY=>aY
         });
         textView.draw(dc);
+        _view = textView;
     }
 
 }
